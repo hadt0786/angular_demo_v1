@@ -3,5 +3,109 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-  }
+    "helloworld": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        },
+        "@schematics/angular:application": {
+          "strict": true
+        }
+      },
+      "root": "projects/helloworld",
+      "sourceRoot": "projects/helloworld/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/helloworld",
+            "index": "projects/helloworld/src/index.html",
+            "main": "projects/helloworld/src/main.ts",
+            "polyfills": "projects/helloworld/src/polyfills.ts",
+            "tsConfig": "projects/helloworld/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/helloworld/src/favicon.ico",
+              "projects/helloworld/src/assets"
+            ],
+            "styles": [
+              "projects/helloworld/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "projects/helloworld/src/environments/environment.ts",
+                  "with": "projects/helloworld/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "helloworld:build:production"
+            },
+            "development": {
+              "browserTarget": "helloworld:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "helloworld:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/helloworld/src/test.ts",
+            "polyfills": "projects/helloworld/src/polyfills.ts",
+            "tsConfig": "projects/helloworld/tsconfig.spec.json",
+            "karmaConfig": "projects/helloworld/karma.conf.js",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/helloworld/src/favicon.ico",
+              "projects/helloworld/src/assets"
+            ],
+            "styles": [
+              "projects/helloworld/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "helloworld"
 }
